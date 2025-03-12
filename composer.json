@@ -1,5 +1,5 @@
 {
-	"name": "author/package",
+	"name": "neoncitylights/encoding",
 	"description": "repository template for creating composer packages",
 	"authors": [
 		{
@@ -11,7 +11,7 @@
 	"license": "MIT",
 	"autoload": {
 		"psr-4": {
-			"Neoncitylights\\ExampleLibrary\\": "src/"
+			"Neoncitylights\\Encoding\\": "src/"
 		}
 	},
 	"require": {
@@ -26,11 +26,13 @@
 	},
 	"scripts": {
 		"test": [
-			"parallel-lint . --exclude vendor --exclude node_modules",
+			"@lint",
 			"@phpunit:xml",
 			"minus-x check .",
-			"phpcs -p -s"
+			"@phpcs"
 		],
+		"lint": "parallel-lint . --exclude vendor --exclude node_modules",
+		"phpcs": "phpcs -p -s",
 		"phpunit": "phpunit tests",
 		"phpunit:xml": "@phpunit --coverage-clover .phpunit/coverage.xml",
 		"phpunit:html": "@phpunit --coverage-html .phpunit/html/",
@@ -38,9 +40,7 @@
 			"minus-x fix .",
 			"phpcbf"
 		],
-		"docs": [
-			"phpdoc"
-		]
+		"docs": "phpdoc"
 	},
 	"config": {
 		"allow-plugins": {
