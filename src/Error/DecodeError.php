@@ -1,6 +1,6 @@
 <?php
 
-namespace Neoncitylights\Encoding;
+namespace Neoncitylights\Encoding\Error;
 
 enum DecodeError {
 	case Fatal;
