@@ -34,7 +34,6 @@ Choose a method:
 
 Using your text editor or IDE, find-and-replace the following placeholders:
 
-- `{repo-name}`: Replace with the name of your repository
 - `author/package`: Replace with your own author and package name.
 - `neoncitylights/php-template`: Replace with the name of your GitHub repository.
 - `Neoncitylights\ExampleLibrary`: Replace with your own namespace.

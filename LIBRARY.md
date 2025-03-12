@@ -1,28 +1,20 @@
-# author/package
+# neoncitylights/encoding
 [![License][license-badge]][license-url]
 [![Docs][docs-badge]][docs-url]
 [![CI][ci-badge]][ci-url]
 
 [license-badge]: https://img.shields.io/badge/License-MIT-blue.svg?style=flat-square
 [license-url]: #license
-[docs-badge]: https://img.shields.io/github/deployments/neoncitylights/php-template/github-pages?label=docs&style=flat-square
-[docs-url]: https://neoncitylights.github.io/php/
-[ci-badge]: https://img.shields.io/github/actions/workflow/status/neoncitylights/php/.github/workflows/php.yml?style=flat-square
-[ci-url]: https://github.com/neoncitylights/php/actions/workflows/php.yml
+[docs-badge]: https://img.shields.io/github/deployments/php-lights/encoding/github-pages?label=docs&style=flat-square
+[docs-url]: https://php-lights.github.io/encoding/
+[ci-badge]: https://img.shields.io/github/actions/workflow/status/php-lights/encoding/.github/workflows/php.yml?style=flat-square
+[ci-url]: https://github.com/php-lights/encoding/actions/workflows/php.yml
 
 Describe the library.
 
 ## Install
 ```sh
-composer install author/package
-```
-
-## Usage
-```php
-use Neoncitylights\ExampleLibrary\Dog;
-
-$dog = new Dog();
-$dog->bark(); // "Woof!"
+composer install neoncitylights/encoding
 ```
 
 ## License

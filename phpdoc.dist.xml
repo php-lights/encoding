@@ -3,14 +3,14 @@
 	configVersion="3"
 	xmlns="https://www.phpdoc.org"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-	<title>MyPackage</title>
+	<title>Encoding</title>
 	<paths>
 		<output>docs/build</output>
 		<cache>docs/cache</cache>
 	</paths>
 	<version number="3.0.0">
 		<api format="php">
-			<default-package-name>MyPackage</default-package-name>
+			<default-package-name>Encoding</default-package-name>
 			<source dsn=".">
 				<path>src</path>
 			</source>
