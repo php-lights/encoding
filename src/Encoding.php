@@ -144,6 +144,20 @@ enum Encoding {
 	}
 
 	/**
+	 * Checks if the encoding is either UTF-16 BE (Big Endian) or
+	 * UTF-16 LE (Little Endian).
+	 *
+	 * @see https://encoding.spec.whatwg.org/#utf-16be-le
+	 */
+	public function isUtf16BeLe(): bool {
+		return match ( $this ) {
+			self::Utf16Be,
+			self::Utf16Le => true,
+			default => false,
+		};
+	}
+
+	/**
 	 * Get an output encoding, useful for URL parsing and HTML form submission.
 	 * @see https://encoding.spec.whatwg.org/#get-an-output-encoding
 	 */

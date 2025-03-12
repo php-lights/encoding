@@ -14,4 +14,8 @@ class Utils {
 			+ ( ( $leadingSurrogate - 0xD800 ) << 10 )
 			+ ( $trailingSurrogate - 0xDC00 );
 	}
+
+	public static function isInclusive( int $n, int $min, int $max ): bool {
+		return $n >= $min && $n <= $max;
+	}
 }

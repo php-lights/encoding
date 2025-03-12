@@ -23,6 +23,12 @@ class Queue implements Countable {
 		return new self( $array, count( $array ) );
 	}
 
+	public function endOfQueue(): int|null {
+		return $this->count() === 1
+			? null
+			: $this->array[$this->count() - 1];
+	}
+
 	public function count(): int {
 		return $this->count;
 	}
