@@ -1,4 +1,4 @@
-# neoncitylights/encoding
+# Encoding
 [![License][license-badge]][license-url]
 [![Docs][docs-badge]][docs-url]
 [![CI][ci-badge]][ci-url]
@@ -10,7 +10,7 @@
 [ci-badge]: https://img.shields.io/github/actions/workflow/status/php-lights/encoding/.github/workflows/php.yml?style=flat-square
 [ci-url]: https://github.com/php-lights/encoding/actions/workflows/php.yml
 
-Describe the library.
+A text encoding library for PHP, implementing the WHATWG Encoding Standard.
 
 ## Install
 ```sh
