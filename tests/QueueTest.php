@@ -100,7 +100,7 @@ class QueueTest extends TestCase {
 		$this->assertFalse( $read );
 	}
 
-	public function tryReadRetainsSizeOf1() {
+	public function testTryReadRetainsSizeOf1() {
 		$queue = Queue::newFromArray( [ 42, 57, 63 ] );
 		$this->assertCount( 3, $queue );
 
@@ -123,5 +123,13 @@ class QueueTest extends TestCase {
 		$q4 = $queue->tryRead();
 		$this->assertSame( 63, $q4 );
 		$this->assertCount( 1, $queue );
+	}
+
+	public function testTryReadRetainSizeOf1FromArray1() {
+		$queue = Queue::newFromArray( [ 42 ] );
+		$this->assertCount( 1, $queue );
+
+		$val = $queue->tryRead();
+		$this->assertSame( 42, $val );
 	}
 }
