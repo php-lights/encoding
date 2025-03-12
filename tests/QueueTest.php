@@ -47,7 +47,7 @@ class QueueTest extends TestCase {
 	}
 
 	public function testEndOfQueue(): void {
-		$queue = Queue::newFromArray([1, 2, 3]);
+		$queue = Queue::newFromArray( [ 1, 2, 3 ] );
 		$this->assertSame( 3, $queue->endOfQueue() );
 	}
 

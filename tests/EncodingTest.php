@@ -8,7 +8,7 @@ use PHPUnit\Framework\TestCase;
 #[CoversClass( Encoding::class )]
 class EncodingTest extends TestCase {
 	#[DataProvider( 'provideIsUtf8' )]
-	public function testIsUtf8( bool $expected, Encoding $encoding ) : void {
+	public function testIsUtf8( bool $expected, Encoding $encoding ): void {
 		$this->assertSame( $expected, $encoding->isUtf8() );
 	}
 
