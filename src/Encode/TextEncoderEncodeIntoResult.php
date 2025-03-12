@@ -4,6 +4,7 @@ namespace Neoncitylights\Encoding\Encode;
 
 /**
  * @codeCoverageIgnore
+ * @see https://encoding.spec.whatwg.org/#dictdef-textencoderencodeintoresult
  */
 class TextEncoderEncodeIntoResult {
 	public function __construct(
