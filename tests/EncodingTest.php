@@ -8,8 +8,8 @@ use PHPUnit\Framework\TestCase;
 #[CoversClass( Encoding::class )]
 class EncodingTest extends TestCase {
 	#[DataProvider( 'provideIsUtf8' )]
-	public function testIsUtf8(): void {
-		$this->assertTrue( Encoding::Utf8->isUtf8() );
+	public function testIsUtf8( bool $expected, Encoding $encoding ): void {
+		$this->assertSame( $expected, $encoding->isUtf8() );
 	}
 
 	public static function provideIsUtf8() {
@@ -67,7 +67,7 @@ class EncodingTest extends TestCase {
 		return [
 			[ true, Encoding::Gbk ],
 			[ true, Encoding::Gb18030 ],
-			[ true, Encoding::Big5 ],
+			[ false, Encoding::Big5 ],
 			[ false, Encoding::Utf8 ],
 		];
 	}
@@ -78,6 +78,21 @@ class EncodingTest extends TestCase {
 	}
 
 	public static function provideIsLegacyMbChineseTraditional(): array {
+		return [
+			[ true, Encoding::Big5 ],
+			[ false, Encoding::EucJp ],
+			[ false, Encoding::Iso2022Jp ],
+			[ false, Encoding::ShiftJis ],
+			[ false, Encoding::Utf8 ],
+		];
+	}
+
+	#[DataProvider( 'provideIsLegacyMbJapanese' )]
+	public function testIsLegacyMbJapanese( bool $expected, Encoding $encoding ): void {
+		$this->assertSame( $expected, $encoding->isLegacyMbJapanese() );
+	}
+
+	public static function provideIsLegacyMbJapanese(): array {
 		return [
 			[ true, Encoding::EucJp ],
 			[ true, Encoding::Iso2022Jp ],
@@ -109,6 +124,20 @@ class EncodingTest extends TestCase {
 			[ true, Encoding::Utf16Be ],
 			[ true, Encoding::Utf16Le ],
 			[ true, Encoding::XUserDefined ],
+			[ false, Encoding::Utf8 ],
+		];
+	}
+
+	#[DataProvider( 'provideIsUtf16BeLe' )]
+	public function testIsUtf16BeLe( bool $expected, Encoding $encoding ): void {
+		$this->assertSame( $expected, $encoding->isUtf16BeLe() );
+	}
+
+	public static function provideIsUtf16BeLe(): array {
+		return [
+			[ true, Encoding::Utf16Be ],
+			[ true, Encoding::Utf16Le ],
+			[ false, Encoding::Replacement ],
 			[ false, Encoding::Utf8 ],
 		];
 	}

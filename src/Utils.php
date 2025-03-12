@@ -2,6 +2,9 @@
 
 namespace Neoncitylights\Encoding;
 
+/**
+ * @internal
+ */
 class Utils {
 	/**
 	 * @see https://encoding.spec.whatwg.org/#scalar-value-from-surrogates
@@ -13,5 +16,9 @@ class Utils {
 		return 0x10000
 			+ ( ( $leadingSurrogate - 0xD800 ) << 10 )
 			+ ( $trailingSurrogate - 0xDC00 );
+	}
+
+	public static function isWithin( int $n, int $min, int $max ): bool {
+		return $n >= $min && $n <= $max;
 	}
 }

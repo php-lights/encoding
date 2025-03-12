@@ -3,7 +3,6 @@
 namespace Neoncitylights\Encoding\Decode;
 
 use Neoncitylights\Encoding\Encoding;
-use Neoncitylights\Encoding\Error\DecodeError;
 
 class TextDecoder implements TextDecoderCommon {
 	private Encoding $encoding;

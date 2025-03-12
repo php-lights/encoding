@@ -46,6 +46,16 @@ class QueueTest extends TestCase {
 		];
 	}
 
+	public function testEndOfQueue(): void {
+		$queue = Queue::newFromArray( [ 1, 2, 3 ] );
+		$this->assertSame( 3, $queue->endOfQueue() );
+	}
+
+	public function testEndOfQueueEmpty(): void {
+		$queue = Queue::newEmpty();
+		$this->assertNull( $queue->endOfQueue() );
+	}
+
 	#[DataProvider( 'providePeek' )]
 	public function testPeek(
 		array $queueItems,
