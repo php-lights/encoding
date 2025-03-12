@@ -36,7 +36,7 @@ $encoder->encode( $s );
 use Neoncitylights\Encoding\Decode\TextDecoder;
 use Neoncitylights\Encoding\Decode\TextDecoderOptions;
 
-$decoder = new TextDecoder( 'utf8', new TextDecoderOptions() );
+$decoder = TextDecoder::tryNew( 'utf8', new TextDecoderOptions() );
 $decoder->decode( [] );
 ```
 

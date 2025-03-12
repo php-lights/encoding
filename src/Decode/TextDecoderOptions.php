@@ -4,6 +4,7 @@ namespace Neoncitylights\Encoding\Decode;
 
 /**
  * @codeCoverageIgnore
+ * @see https://encoding.spec.whatwg.org/#textdecoderoptions
  */
 class TextDecoderOptions {
 	public function __construct(
