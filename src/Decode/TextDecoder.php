@@ -4,6 +4,9 @@ namespace Neoncitylights\Encoding\Decode;
 
 use Neoncitylights\Encoding\Encoding;
 
+/**
+ * @see https://encoding.spec.whatwg.org/#textdecoder
+ */
 class TextDecoder implements TextDecoderCommon {
 	private Encoding $encoding;
 	private bool $fatal;
@@ -28,17 +31,13 @@ class TextDecoder implements TextDecoderCommon {
 		TextDecoderOptions $options,
 	): self|null {
 		$encoding = Encoding::tryFromLabel( $label );
-		if (
-			$encoding === null
-			|| $encoding === Encoding::Replacement
-		) {
+		if ( $encoding === null || $encoding === Encoding::Replacement ) {
 			return null;
 		}
 
-		$errorMode = DecodeError::Replacement;
-		if ( $options->fatal ) {
-			$errorMode = DecodeError::Fatal;
-		}
+		$errorMode = $options->fatal
+			? DecodeError::Fatal
+			: DecodeError::Replacement;
 
 		return new self(
 			$encoding,
