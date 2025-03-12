@@ -16,11 +16,17 @@ class TextEncoder implements TextEncoderCommon {
 		return $this->encoding;
 	}
 
+	/**
+	 * @codeCoverageIgnore
+	 */
 	public function encode( string $input ): array {
 		// TODO: implement method
 		throw new Exception();
 	}
 
+	/**
+	 * @codeCoverageIgnore
+	 */
 	public function encodeInto( string $source, array $dest ): TextEncoderEncodeIntoResult {
 		// TODO: implement method
 		throw new Exception();
