@@ -3,7 +3,7 @@
 namespace Neoncitylights\Encoding;
 
 class HandleStateValue {
-	public function __construct(
+	private function __construct(
 		public readonly HandleState $handleState,
 		public readonly null|int|array $value,
 	) {
