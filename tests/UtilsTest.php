@@ -26,4 +26,16 @@ class UtilsTest extends TestCase {
 			[ 0x10FFFF, 0xDBFF, 0xDFFF ],
 		];
 	}
+
+	#[DataProvider( 'provideIsWithin' )]
+	public function testIsWithin( bool $expected, int $n, int $min, int $max ): void {
+		$this->assertSame( $expected, Utils::isWithin( $n, $min, $max ) );
+	}
+
+	public static function provideIsWithin(): array {
+		return [
+			[ true, 0, -1, 1 ],
+			[ false, 0, 2, 4 ],
+		];
+	}
 }
