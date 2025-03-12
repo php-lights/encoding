@@ -27,10 +27,10 @@ class QueueTest extends TestCase {
 		int $pushedSize,
 	) {
 		$queue = Queue::newFromArray( $queueItems );
-		$this->assertSame( $initialSize, $queue->size() );
+		$this->assertSame( $initialSize, $queue->count() );
 
 		$queue->push( $item );
-		$this->assertSame( $pushedSize, $queue->size() );
+		$this->assertSame( $pushedSize, $queue->count() );
 	}
 
 	public static function providePush(): array {
@@ -54,11 +54,11 @@ class QueueTest extends TestCase {
 		int $afterReadSize,
 	) {
 		$queue = Queue::newFromArray( $queueItems );
-		$this->assertSame( $initialSize, $queue->size() );
+		$this->assertSame( $initialSize, $queue->count() );
 
 		$read = $queue->tryRead();
 		$this->assertSame( $expected, $read );
-		$this->assertSame( $afterReadSize, $queue->size() );
+		$this->assertSame( $afterReadSize, $queue->count() );
 	}
 
 	public static function provideReadOk(): array {
@@ -80,26 +80,26 @@ class QueueTest extends TestCase {
 
 	public function tryReadRetainsSizeOf1() {
 		$queue = Queue::newFromArray( [ 42, 57, 63 ] );
-		$this->assertSame( 3, $queue->size() );
+		$this->assertCount( 3, $queue );
 
 		// read once
 		$q1 = $queue->tryRead();
 		$this->assertSame( 42, $q1 );
-		$this->assertSame( 2, $queue->size() );
+		$this->assertCount( 2, $queue );
 
 		// read twice
 		$q2 = $queue->tryRead();
 		$this->assertSame( 57, $q2 );
-		$this->assertSame( 1, $queue->size() );
+		$this->assertCount( 1, $queue );
 
-		// read three times
+		// read three times, retain size of 1
 		$q3 = $queue->tryRead();
 		$this->assertSame( 63, $q3 );
-		$this->assertSame( 1, $queue->size() );
+		$this->assertCount( 1, $queue );
 
 		// read four times, should produce same results
 		$q4 = $queue->tryRead();
 		$this->assertSame( 63, $q4 );
-		$this->assertSame( 1, $queue->size() );
+		$this->assertCount( 1, $queue );
 	}
 }

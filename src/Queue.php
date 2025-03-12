@@ -2,14 +2,16 @@
 
 namespace Neoncitylights\Encoding;
 
-class Queue {
+use Countable;
+
+class Queue implements Countable {
 	/** @var int[] */
 	private array $array;
-	private int $size;
+	private int $count;
 
 	public function __construct( array $array, int $size ) {
 		$this->array = $array;
-		$this->size = $size;
+		$this->count = $size;
 	}
 
 	public static function newEmpty(): self {
@@ -20,13 +22,13 @@ class Queue {
 		return new self( $array, count( $array ) );
 	}
 
-	public function size(): int {
-		return $this->size;
+	public function count(): int {
+		return $this->count;
 	}
 
 	public function push( int $item ): void {
 		\array_push( $this->array, $item );
-		$this->size++;
+		$this->count++;
 	}
 
 	public function peek(): int|false {
@@ -34,17 +36,17 @@ class Queue {
 	}
 
 	public function tryRead(): int|false {
-		if ( $this->size === 0 ) {
+		if ( $this->count === 0 ) {
 			return false;
 		}
 
-		if ( $this->size === 1 ) {
+		if ( $this->count === 1 ) {
 			return $this->array[0];
 		}
 
 		$value = $this->array[0];
 		\array_shift( $this->array );
-		$this->size--;
+		$this->count--;
 
 		return $value;
 	}
