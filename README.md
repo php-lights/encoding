@@ -10,7 +10,7 @@
 [ci-badge]: https://img.shields.io/github/actions/workflow/status/php-lights/encoding/.github/workflows/php.yml?style=flat-square
 [ci-url]: https://github.com/php-lights/encoding/actions/workflows/php.yml
 
-A text encoding library for PHP, implementing the WHATWG Encoding Standard.
+A text encoding library for PHP, implementing the [WHATWG Encoding Standard](https://encoding.spec.whatwg.org).
 
 ## Install
 ```sh
