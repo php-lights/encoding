@@ -12,18 +12,18 @@ enum HandleState {
 	case Continue;
 
 	public function isFinished(): bool {
-		return $this === Self::Finished;
+		return $this === self::Finished;
 	}
 
 	public function isOneOrMore(): bool {
-		return $this === Self::OneOrMore;
+		return $this === self::OneOrMore;
 	}
 
 	public function isError(): bool {
-		return $this === Self::Error;
+		return $this === self::Error;
 	}
 
 	public function isContinue(): bool {
-		return $this === Self::Continue;
+		return $this === self::Continue;
 	}
 }
