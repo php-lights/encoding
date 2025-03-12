@@ -20,4 +20,35 @@ class EncodingTest extends TestCase {
 			[ Encoding::Koi8U, Encoding::Koi8U ],
 		];
 	}
+
+	#[DataProvider( "provideTryFromUtf8" )]
+	public function testTryFromUtf8( ?Encoding $expectedEncoding, string $label ): void {
+		$this->assertSame( $expectedEncoding, Encoding::tryFromLabel( $label ) );
+	}
+
+	public static function provideTryFromUtf8(): array {
+		return [
+			[ Encoding::Utf8, 'unicode-1-1-utf-8' ],
+			[ Encoding::Utf8, 'unicode20utf8' ],
+			[ Encoding::Utf8, 'utf-8' ],
+			[ Encoding::Utf8, 'utf8' ],
+			[ Encoding::Utf8, 'x-unicode20utf8' ],
+			[ null, 'utf9' ],
+		];
+	}
+
+	#[DataProvider( "provideTryFromIbm866" )]
+	public function testTryFromIbm866( ?Encoding $expectedEncoding, string $label ): void {
+		$this->assertSame( $expectedEncoding, Encoding::tryFromLabel( $label ) );
+	}
+
+	public static function provideTryFromIbm866(): array {
+		return [
+			[ Encoding::Ibm866, '866', ],
+			[ Encoding::Ibm866, 'cp866' ],
+			[ Encoding::Ibm866, 'csibm866' ],
+			[ Encoding::Ibm866, 'ibm866' ],
+			[ null, 'ibm867' ],
+		];
+	}
 }

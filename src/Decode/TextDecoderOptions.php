@@ -2,6 +2,9 @@
 
 namespace Neoncitylights\Encoding\Decode;
 
+/**
+ * @codeCoverageIgnore
+ */
 class TextDecoderOptions {
 	public function __construct(
 		public bool $fatal = false,

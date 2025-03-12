@@ -425,7 +425,10 @@ enum Encoding {
 			'x-user-defined'    => Encoding::XUserDefined,
 		];
 
-		$value = $map[$label];
-		return $value ?? null;
+		if ( \array_key_exists( $label, $map ) ) {
+			return $map[$label];
+		} else {
+			return null;
+		}
 	}
 }
