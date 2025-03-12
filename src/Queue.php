@@ -3,6 +3,7 @@
 namespace Neoncitylights\Encoding;
 
 use Countable;
+use Exception;
 
 class Queue implements Countable {
 	/** @var int[] */
@@ -51,9 +52,19 @@ class Queue implements Countable {
 		return $value;
 	}
 
+	/**
+	 * @todo
+	 * @codeCoverageIgnore
+	 */
 	public function restoreItem( int $item ): void {
+		throw new Exception();
 	}
 
+	/**
+	 * @todo
+	 * @codeCoverageIgnore
+	 */
 	public function restoreListOfItems( array $items ): void {
+		throw new Exception();
 	}
 }

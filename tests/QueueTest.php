@@ -46,6 +46,28 @@ class QueueTest extends TestCase {
 		];
 	}
 
+	#[DataProvider( 'providePeek' )]
+	public function testPeek(
+		array $queueItems,
+		int $expectedSize,
+		int $expectedPeek,
+	): void {
+		$queue = Queue::newFromArray( $queueItems );
+		$this->assertCount( $expectedSize, $queue );
+		$this->assertSame( $expectedPeek, $queue->peek() );
+		$this->assertCount( $expectedSize, $queue );
+	}
+
+	public static function providePeek(): array {
+		return [
+			[
+				[ 0, 1, 2 ],
+				3,
+				0,
+			]
+		];
+	}
+
 	#[DataProvider( "provideReadOk" )]
 	public function testReadOk(
 		array $queueItems,
