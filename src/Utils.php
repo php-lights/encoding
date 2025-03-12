@@ -2,6 +2,9 @@
 
 namespace Neoncitylights\Encoding;
 
+/**
+ * @internal
+ */
 class Utils {
 	/**
 	 * @see https://encoding.spec.whatwg.org/#scalar-value-from-surrogates
@@ -15,7 +18,7 @@ class Utils {
 			+ ( $trailingSurrogate - 0xDC00 );
 	}
 
-	public static function isInclusive( int $n, int $min, int $max ): bool {
+	public static function isWithin( int $n, int $min, int $max ): bool {
 		return $n >= $min && $n <= $max;
 	}
 }

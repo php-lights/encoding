@@ -57,6 +57,7 @@ enum Encoding {
 
 	/**
 	 * Checks if the encoding is UTF-8.
+	 * @see https://encoding.spec.whatwg.org/#the-encoding
 	 */
 	public function isUtf8(): bool {
 		return $this === self::Utf8;
@@ -64,6 +65,7 @@ enum Encoding {
 
 	/**
 	 * Checks if the encoding is a legacy single-byte encoding.
+	 * @see https://encoding.spec.whatwg.org/#legacy-single-byte-encodings
 	 */
 	public function isLegacySb(): bool {
 		return match ( $this ) {
@@ -101,20 +103,29 @@ enum Encoding {
 
 	/**
 	 * Checks if the encoding is a legacy multi-byte Chinese (simplified) encoding.
+	 * @see https://encoding.spec.whatwg.org/#legacy-multi-byte-chinese-(simplified)-encodings
 	 */
 	public function isLegacyMbChineseSimplified(): bool {
 		return match ( $this ) {
 			self::Gbk,
-			self::Gb18030,
-			self::Big5 => true,
+			self::Gb18030 => true,
 			default => false,
 		};
 	}
 
 	/**
 	 * Checks if the encoding is a legacy multi-byte Chinese (traditional) encoding.
+	 * @see https://encoding.spec.whatwg.org/#legacy-multi-byte-chinese-(traditional)-encodings
 	 */
 	public function isLegacyMbChineseTraditional(): bool {
+		return $this === self::Big5;
+	}
+
+	/**
+	 * Checks if the encoding is a legacy multi-byte Japanese encoding.
+	 * @see https://encoding.spec.whatwg.org/#legacy-multi-byte-japanese-encodings
+	 */
+	public function isLegacyMbJapanese(): bool {
 		return match ( $this ) {
 			self::EucJp,
 			self::Iso2022Jp,
@@ -125,6 +136,7 @@ enum Encoding {
 
 	/**
 	 * Checks if the encoding is a legacy multi-byte Korean encoding.
+	 * @see https://encoding.spec.whatwg.org/#legacy-multi-byte-korean-encodings
 	 */
 	public function isLegacyMbKorean(): bool {
 		return $this === self::EucKr;
@@ -132,6 +144,7 @@ enum Encoding {
 
 	/**
 	 * Checks if the encoding is a legacy-miscellaneous encoding.
+	 * @see https://encoding.spec.whatwg.org/#legacy-miscellaneous-encodings
 	 */
 	public function isLegacyMisc(): bool {
 		return match ( $this ) {
@@ -146,7 +159,6 @@ enum Encoding {
 	/**
 	 * Checks if the encoding is either UTF-16 BE (Big Endian) or
 	 * UTF-16 LE (Little Endian).
-	 *
 	 * @see https://encoding.spec.whatwg.org/#utf-16be-le
 	 */
 	public function isUtf16BeLe(): bool {
@@ -169,6 +181,8 @@ enum Encoding {
 	}
 
 	/**
+	 * Attempts to return an encoding variant from a label.
+	 * If no encoding matches, returns null.
 	 * @see https://encoding.spec.whatwg.org/#concept-encoding-get
 	 */
 	public static function tryFromLabel( string $label ): ?Encoding {

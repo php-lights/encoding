@@ -5,6 +5,14 @@ namespace Neoncitylights\Encoding;
 use Countable;
 use Exception;
 
+/**
+ * A queue data structure that runs in intermediate mode
+ * instead of streaming mode, which therefore does not block.
+ * End-of-queue items are represented as the last item.
+ *
+ * @internal
+ * @see https://encoding.spec.whatwg.org/#concept-stream
+ */
 class Queue implements Countable {
 	/** @var int[] */
 	private array $array;
@@ -23,25 +31,18 @@ class Queue implements Countable {
 		return new self( $array, count( $array ) );
 	}
 
-	public function endOfQueue(): int|null {
-		return $this->count() === 1
-			? null
-			: $this->array[$this->count() - 1];
-	}
-
 	public function count(): int {
 		return $this->count;
 	}
 
-	public function push( int $item ): void {
-		\array_push( $this->array, $item );
-		$this->count++;
+	/** @see https://encoding.spec.whatwg.org/#end-of-stream */
+	public function endOfQueue(): int|null {
+		return $this->count() === 0
+			? null
+			: $this->array[$this->count() - 1];
 	}
 
-	public function peek(): int|false {
-		return \current( $this->array );
-	}
-
+	/** @see https://encoding.spec.whatwg.org/#concept-stream-read */
 	public function tryRead(): int|false {
 		if ( $this->count === 0 ) {
 			return false;
@@ -58,9 +59,21 @@ class Queue implements Countable {
 		return $value;
 	}
 
+	/** @see https://encoding.spec.whatwg.org/#i-o-queue-peek */
+	public function peek(): int|false {
+		return \current( $this->array );
+	}
+
+	/** @see https://encoding.spec.whatwg.org/#i-o-queue-peek */
+	public function push( int $item ): void {
+		\array_push( $this->array, $item );
+		$this->count++;
+	}
+
 	/**
 	 * @todo
 	 * @codeCoverageIgnore
+	 * @see https://encoding.spec.whatwg.org/#concept-stream-prepend
 	 */
 	public function restoreItem( int $item ): void {
 		throw new Exception();
@@ -69,6 +82,7 @@ class Queue implements Countable {
 	/**
 	 * @todo
 	 * @codeCoverageIgnore
+	 * @see https://encoding.spec.whatwg.org/#concept-stream-prepend
 	 */
 	public function restoreListOfItems( array $items ): void {
 		throw new Exception();

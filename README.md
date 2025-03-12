@@ -17,6 +17,29 @@ A text encoding library for PHP, implementing the [WHATWG Encoding Standard](htt
 composer install neoncitylights/encoding
 ```
 
+## Usage
+### Encoding
+```php
+<?php
+
+use Neoncitylights\Encoding\Encode\TextEncoder;
+
+$encoder = new TextEncoder();
+$encoder->encode( $s );
+
+```
+
+### Decoding
+```php
+<?php
+
+use Neoncitylights\Encoding\Decode\TextDecoder;
+use Neoncitylights\Encoding\Decode\TextDecoderOptions;
+
+$decoder = new TextDecoder( 'utf8', new TextDecoderOptions() );
+$decoder->decode( [] );
+```
+
 ## License
 This software is licensed under the MIT license ([`LICENSE`](./LICENSE) or <http://opensource.org/licenses/MIT>).
 

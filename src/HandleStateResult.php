@@ -2,6 +2,10 @@
 
 namespace Neoncitylights\Encoding;
 
+/**
+ * The state for an encoder/decoder handler, optionally paired with a value.
+ * @see https://encoding.spec.whatwg.org/#handler
+ */
 class HandleStateResult {
 	private function __construct(
 		public readonly HandleState $state,
