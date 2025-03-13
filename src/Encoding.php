@@ -2,58 +2,71 @@
 
 namespace Neoncitylights\Encoding;
 
-enum Encoding {
+/**
+ * An enum of all encoding variants that a user agent must support.
+ *
+ * Note that while every variant is tied to multiple labels,
+ * every variant is also backed by its canonical name as an ASCII-lowercased label.
+ *
+ * - To convert from a canonical label to an encoding, call `Encoding::tryFrom()`.
+ * - To convert from multiple possible labels to an encoding, call `Encoding::tryFromLabel()`.
+ *
+ * @see https://encoding.spec.whatwg.org/#names-and-labels
+ */
+enum Encoding: string {
 	// Main encoding
-	case Utf8;
+	case Utf8 = 'utf-8';
 
 	// Legacy single-byte encodings
-	case Ibm866;
-	case Iso8859_2;
-	case Iso8859_3;
-	case Iso8859_4;
-	case Iso8859_5;
-	case Iso8859_6;
-	case Iso8859_7;
-	case Iso8859_8;
-	case Iso8859_8I;
-	case Iso8859_10;
-	case Iso8859_13;
-	case Iso8859_14;
-	case Iso8859_15;
-	case Iso8859_16;
-	case Koi8R;
-	case Koi8U;
-	case Macintosh;
-	case Windows874;
-	case Windows1250;
-	case Windows1251;
-	case Windows1252;
-	case Windows1253;
-	case Windows1254;
-	case Windows1255;
-	case Windows1256;
-	case Windows1257;
-	case Windows1258;
-	case XMacCyrillic;
+	case Ibm866 = 'ibm866';
+	case Iso8859_2 = 'iso-8859-2';
+	case Iso8859_3 = 'iso-8859-3';
+	case Iso8859_4 = 'iso-8859-4';
+	case Iso8859_5 = 'iso-8859-5';
+	case Iso8859_6 = 'iso-8859-6';
+	case Iso8859_7 = 'iso-8859-7';
+	case Iso8859_8 = 'iso-8859-8';
+	case Iso8859_8I = 'iso-8859-8i';
+	case Iso8859_10 = 'iso-8859-10';
+	case Iso8859_13 = 'iso-8859-13';
+	case Iso8859_14 = 'iso-8859-14';
+	case Iso8859_15 = 'iso-8859-15';
+	case Iso8859_16 = 'iso-8859-16';
+	case Koi8R = 'koi8-r';
+	case Koi8U = 'koi8-u';
+	case Macintosh = 'macintosh';
+	case Windows874 = 'windows-874';
+	case Windows1250 = 'windows-1250';
+	case Windows1251 = 'windows-1251';
+	case Windows1252 = 'windows-1252';
+	case Windows1253 = 'windows-1253';
+	case Windows1254 = 'windows-1254';
+	case Windows1255 = 'windows-1255';
+	case Windows1256 = 'windows-1256';
+	case Windows1257 = 'windows-1257';
+	case Windows1258 = 'windows-1258';
+	case XMacCyrillic = 'x-mac-cyrillic';
 
 	// Legacy multi-byte Chinese (simplified) encodings
-	case Gbk;
-	case Gb18030;
-	case Big5;
+	case Gbk = 'gbk';
+	case Gb18030 = 'gb18030';
 
 	// Legacy multi-byte Chinese (traditional) encodings
-	case EucJp;
-	case Iso2022Jp;
-	case ShiftJis;
+	case Big5 = 'big5';
+
+	// Legacy multi-byte Japanese encodings
+	case EucJp = 'euc-jp';
+	case Iso2022Jp = 'iso-2022-jp';
+	case ShiftJis = 'shift_jis';
 
 	// Legacy multi-byte Korean encodings
-	case EucKr;
+	case EucKr = 'euc-kr';
 
 	// Legacy miscellaneous encodings
-	case Replacement;
-	case Utf16Be;
-	case Utf16Le;
-	case XUserDefined;
+	case Replacement = 'replacement';
+	case Utf16Be = 'utf-16be';
+	case Utf16Le = 'utf-16le';
+	case XUserDefined = 'x-user-defined';
 
 	/**
 	 * Checks if the encoding is UTF-8.

@@ -156,6 +156,68 @@ class EncodingTest extends TestCase {
 		];
 	}
 
+	#[DataProvider( "provideTryFromNative" )]
+	public function testTryFromNative( Encoding $expectedEncoding, string $label ): void {
+		$this->assertSame( $expectedEncoding, Encoding::tryFrom( $label ) );
+	}
+
+	public static function provideTryFromNative(): array {
+		return [
+			[ Encoding::Utf8, 'utf-8' ],
+
+			// Legacy single-byte encodings
+			[ Encoding::Ibm866, 'ibm866' ],
+			[ Encoding::Iso8859_2, 'iso-8859-2' ],
+			[ Encoding::Iso8859_3, 'iso-8859-3' ],
+			[ Encoding::Iso8859_4, 'iso-8859-4' ],
+			[ Encoding::Iso8859_5, 'iso-8859-5' ],
+			[ Encoding::Iso8859_6, 'iso-8859-6' ],
+			[ Encoding::Iso8859_7, 'iso-8859-7' ],
+			[ Encoding::Iso8859_8, 'iso-8859-8' ],
+			[ Encoding::Iso8859_8I, 'iso-8859-8i' ],
+			[ Encoding::Iso8859_10, 'iso-8859-10' ],
+			[ Encoding::Iso8859_13, 'iso-8859-13' ],
+			[ Encoding::Iso8859_14, 'iso-8859-14' ],
+			[ Encoding::Iso8859_15, 'iso-8859-15' ],
+			[ Encoding::Iso8859_16, 'iso-8859-16' ],
+			[ Encoding::Koi8R, 'koi8-r' ],
+			[ Encoding::Koi8U, 'koi8-u' ],
+			[ Encoding::Macintosh, 'macintosh' ],
+			[ Encoding::Windows874, 'windows-874' ],
+			[ Encoding::Windows1250, 'windows-1250' ],
+			[ Encoding::Windows1251, 'windows-1251' ],
+			[ Encoding::Windows1252, 'windows-1252' ],
+			[ Encoding::Windows1253, 'windows-1253' ],
+			[ Encoding::Windows1254, 'windows-1254' ],
+			[ Encoding::Windows1255, 'windows-1255' ],
+			[ Encoding::Windows1256, 'windows-1256' ],
+			[ Encoding::Windows1257, 'windows-1257' ],
+			[ Encoding::Windows1258, 'windows-1258' ],
+			[ Encoding::XMacCyrillic, 'x-mac-cyrillic' ],
+
+			// Legacy multi-byte Chinese (simplified) encodings
+			[ Encoding::Gbk, 'gbk' ],
+			[ Encoding::Gb18030, 'gb18030' ],
+
+			// Legacy multi-byte Chinese (traditional) encodings
+			[ Encoding::Big5, 'big5' ],
+
+			// Legacy multi-byte Japanese encodings
+			[ Encoding::EucJp, 'euc-jp' ],
+			[ Encoding::Iso2022Jp, 'iso-2022-jp' ],
+			[ Encoding::ShiftJis, 'shift_jis' ],
+
+			// Legacy multi-byte Korean encodings
+			[ Encoding::EucKr, 'euc-kr' ],
+
+			// Legacy miscellaneous encodings
+			[ Encoding::Replacement, 'replacement' ],
+			[ Encoding::Utf16Be, 'utf-16be' ],
+			[ Encoding::Utf16Le, 'utf-16le' ],
+			[ Encoding::XUserDefined, 'x-user-defined' ]
+		];
+	}
+
 	#[DataProvider( "provideTryFromUtf8" )]
 	public function testTryFromUtf8( ?Encoding $expectedEncoding, string $label ): void {
 		$this->assertSame( $expectedEncoding, Encoding::tryFromLabel( $label ) );
