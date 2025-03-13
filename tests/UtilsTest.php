@@ -38,4 +38,20 @@ class UtilsTest extends TestCase {
 			[ false, 0, 2, 4 ],
 		];
 	}
+
+	#[DataProvider( 'provideIsAscii' )]
+	public function testIsAscii( bool $expected, int $byte ): void {
+		$this->assertSame( $expected, Utils::isAscii( $byte ) );
+	}
+
+	public static function provideIsAscii(): array {
+		return [
+			[ true, \ord( 'a' ) ],
+			[ true, \ord( 'A' ) ],
+			[ true, \ord( '0' ) ],
+			[ true, \ord( '9' ) ],
+			[ true, 0x007F ],
+			[ false, 0x0080 ],
+		];
+	}
 }
