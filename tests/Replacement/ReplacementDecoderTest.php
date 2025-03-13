@@ -3,6 +3,7 @@
 namespace Neoncitylights\Encoding\Replacement\Tests;
 
 use Neoncitylights\Encoding\HandleState;
+use Neoncitylights\Encoding\HandleStateResult;
 use Neoncitylights\Encoding\Queue;
 use Neoncitylights\Encoding\Replacement\ReplacementDecoder;
 use PHPUnit\Framework\Attributes\CoversClass;
@@ -10,6 +11,8 @@ use PHPUnit\Framework\Attributes\UsesClass;
 use PHPUnit\Framework\TestCase;
 
 #[CoversClass( ReplacementDecoder::class )]
+#[UsesClass( HandleState::class )]
+#[UsesClass( HandleStateResult::class )]
 #[UsesClass( Queue::class )]
 class ReplacementDecoderTest extends TestCase {
 	public function testEndOfQueueEarlyFinished() {
@@ -17,7 +20,7 @@ class ReplacementDecoderTest extends TestCase {
 		$queue = Queue::newFromArray( [ 1, 2, 3 ] );
 
 		$result = $decoder->handler( $queue, 3 );
-		$this->assertSame( HandleState::Finished, $result->state );
+		$this->assertTrue( $result->state->isFinished() );
 	}
 
 	public function testError() {
@@ -25,7 +28,7 @@ class ReplacementDecoderTest extends TestCase {
 		$queue = Queue::newFromArray( [ 1, 2, 3 ] );
 
 		$result = $decoder->handler( $queue, 4 );
-		$this->assertSame( HandleState::Error, $result->state );
+		$this->assertTrue( $result->state->isError() );
 	}
 
 	public function testFinishedAfterError() {
@@ -34,6 +37,6 @@ class ReplacementDecoderTest extends TestCase {
 
 		$result = $decoder->handler( $queue, 4 );
 		$result = $decoder->handler( $queue, 4 );
-		$this->assertSame( HandleState::Finished, $result->state );
+		$this->assertTrue( $result->state->isFinished() );
 	}
 }
