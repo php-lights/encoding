@@ -23,6 +23,6 @@ class Utils {
 	}
 
 	public static function isAscii( int $byte ): bool {
-		return self::isWithin( $byte, 0x00, 0x7f );
+		return self::isWithin( $byte, 0x00, 0x7F );
 	}
 }
