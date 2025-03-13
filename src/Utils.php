@@ -21,4 +21,8 @@ class Utils {
 	public static function isWithin( int $n, int $min, int $max ): bool {
 		return $n >= $min && $n <= $max;
 	}
+
+	public static function isAscii( int $byte ): bool {
+		return self::isWithin( $byte, 0x00, 0x7F );
+	}
 }
