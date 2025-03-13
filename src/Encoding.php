@@ -6,8 +6,10 @@ namespace Neoncitylights\Encoding;
  * An enum of all encoding variants that a user agent must support.
  *
  * Note that while every variant is tied to multiple labels,
- * every variant is backed by a "main" label, which is defined
- * as the encoding converted via ASCII-lowering.
+ * every variant is also backed by its canonical name as an ASCII-lowercased label.
+ *
+ * - To convert from a canonical label to an encoding, call `Encoding::tryFrom()`.
+ * - To convert from multiple possible labels to an encoding, call `Encoding::tryFromLabel()`.
  *
  * @see https://encoding.spec.whatwg.org/#names-and-labels
  */
