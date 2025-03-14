@@ -15,7 +15,7 @@ use PHPUnit\Framework\TestCase;
 #[UsesClass( HandleStateResult::class )]
 #[UsesClass( Queue::class )]
 class ReplacementDecoderTest extends TestCase {
-	public function testEndOfQueueEarlyFinished() {
+	public function testEndOfQueueEarlyFinished(): void {
 		$decoder = new ReplacementDecoder();
 		$queue = Queue::newFromArray( [ 1, 2, 3 ] );
 
@@ -23,7 +23,7 @@ class ReplacementDecoderTest extends TestCase {
 		$this->assertTrue( $result->state->isFinished() );
 	}
 
-	public function testError() {
+	public function testError(): void {
 		$decoder = new ReplacementDecoder();
 		$queue = Queue::newFromArray( [ 1, 2, 3 ] );
 
@@ -31,7 +31,7 @@ class ReplacementDecoderTest extends TestCase {
 		$this->assertTrue( $result->state->isError() );
 	}
 
-	public function testFinishedAfterError() {
+	public function testFinishedAfterError(): void {
 		$decoder = new ReplacementDecoder();
 		$queue = Queue::newFromArray( [ 1, 2, 3 ] );
 

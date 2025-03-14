@@ -16,7 +16,7 @@ use PHPUnit\Framework\TestCase;
 #[UsesClass( HandleStateResult::class )]
 #[UsesClass( Queue::class )]
 class XUserDefinedDecoderTest extends TestCase {
-	public function testEndOfQueueFinished() {
+	public function testEndOfQueueFinished(): void {
 		$decoder = new XUserDefinedDecoder();
 		$queue = Queue::newFromArray( [ 0, 1, 2 ] );
 
@@ -24,7 +24,7 @@ class XUserDefinedDecoderTest extends TestCase {
 		$this->assertTrue( $result->state->isFinished() );
 	}
 
-	public function testAsciiOneOrMore() {
+	public function testAsciiOneOrMore(): void {
 		$decoder = new XUserDefinedDecoder();
 		$queue = Queue::newFromArray( [ 0, 1, 2 ] );
 
@@ -34,7 +34,7 @@ class XUserDefinedDecoderTest extends TestCase {
 	}
 
 	#[DataProvider( 'provideNotAsciiOneOrMore' )]
-	public function testNotAsciiOneOrMore( int $originalByte, int $expectedByte ) {
+	public function testNotAsciiOneOrMore( int $originalByte, int $expectedByte ): void {
 		$decoder = new XUserDefinedDecoder();
 		$queue = Queue::newFromArray( [ 0, 1, 2 ] );
 
