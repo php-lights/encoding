@@ -84,7 +84,7 @@ class QueueTest extends TestCase {
 		int $initialSize,
 		int|false $expected,
 		int $afterReadSize,
-	) {
+	): void {
 		$queue = Queue::newFromArray( $queueItems );
 		$this->assertSame( $initialSize, $queue->count() );
 
@@ -104,13 +104,13 @@ class QueueTest extends TestCase {
 		];
 	}
 
-	public function testReadError() {
+	public function testReadError(): void {
 		$queue = Queue::newEmpty();
 		$read = $queue->tryRead();
 		$this->assertFalse( $read );
 	}
 
-	public function testTryReadRetainsSizeOf1() {
+	public function testTryReadRetainsSizeOf1(): void {
 		$queue = Queue::newFromArray( [ 42, 57, 63 ] );
 		$this->assertCount( 3, $queue );
 
@@ -135,11 +135,55 @@ class QueueTest extends TestCase {
 		$this->assertCount( 1, $queue );
 	}
 
-	public function testTryReadRetainSizeOf1FromArray1() {
+	public function testTryReadRetainSizeOf1FromArray1(): void {
 		$queue = Queue::newFromArray( [ 42 ] );
 		$this->assertCount( 1, $queue );
 
 		$val = $queue->tryRead();
 		$this->assertSame( 42, $val );
+	}
+
+	#[DataProvider( 'provideRestoreItem' )]
+	public function testRestoreItem( array $queueItems, int $newItem ): void {
+		$queue = Queue::newFromArray( $queueItems );
+		$queue->restoreItem( $newItem );
+		$value = $queue->tryRead();
+
+		$this->assertSame( $newItem, $value );
+	}
+
+	public static function provideRestoreItem(): array {
+		return [
+			[
+				[ 4, 5, 6 ],
+				3,
+				3,
+			],
+			[
+				[],
+				1,
+				1,
+			]
+		];
+	}
+
+	#[DataProvider( 'provideRestoreListOfItems' )]
+	public function testRestoreListOfItems( array $queueItems, array $newItems, int $newSize ): void {
+		$queue = Queue::newFromArray( $queueItems );
+		$queue->restoreListOfItems( $newItems );
+
+		$this->assertCount( $newSize, $queue );
+		$this->assertSame( $newItems[0], $queue->tryRead() );
+		$this->assertSame( $newItems[1], $queue->tryRead() );
+	}
+
+	public static function provideRestoreListOfItems(): array {
+		return [
+			[
+				[ 4, 5, 6 ],
+				[ 2, 3 ],
+				5,
+			],
+		];
 	}
 }

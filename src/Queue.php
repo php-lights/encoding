@@ -82,7 +82,7 @@ class Queue implements Countable {
 	 * @see https://encoding.spec.whatwg.org/#concept-stream-prepend
 	 */
 	public function restoreListOfItems( array $items ): void {
-		\array_unshift( $this->array, $items );
+		\array_unshift( $this->array, ...$items );
 		$this->count += count( $items );
 	}
 }
