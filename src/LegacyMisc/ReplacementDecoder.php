@@ -1,6 +1,6 @@
 <?php
 
-namespace Neoncitylights\Encoding\Replacement;
+namespace Neoncitylights\Encoding\LegacyMisc;
 
 use Neoncitylights\Encoding\HandleStateResult;
 use Neoncitylights\Encoding\Queue;
