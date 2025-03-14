@@ -9,12 +9,12 @@ use PHPUnit\Framework\TestCase;
 
 #[CoversClass( Queue::class )]
 class QueueTest extends TestCase {
-	public function testNewEmpty() {
+	public function testNewEmpty(): void {
 		$emptyQueue = Queue::newEmpty();
 		$this->assertInstanceOf( Queue::class, $emptyQueue );
 	}
 
-	public function testNewFromArray() {
+	public function testNewFromArray(): void {
 		$queue = Queue::newFromArray( [ 0, 1, 2, 3 ] );
 		$this->assertInstanceOf( Queue::class, $queue );
 	}
@@ -25,7 +25,7 @@ class QueueTest extends TestCase {
 		int $initialSize,
 		int $item,
 		int $pushedSize,
-	) {
+	): void {
 		$queue = Queue::newFromArray( $queueItems );
 		$this->assertSame( $initialSize, $queue->count() );
 

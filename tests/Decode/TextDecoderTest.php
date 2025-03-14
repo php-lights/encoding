@@ -20,14 +20,14 @@ class TextDecoderTest extends TestCase {
 		Encoding $expectedEncoding,
 		bool $expectedFatal,
 		bool $expectedIgnoreBom,
-	) {
+	): void {
 		$decoder = TextDecoder::tryNew( $label, $options );
 		$this->assertSame( $expectedEncoding, $decoder->getEncoding() );
 		$this->assertSame( $expectedFatal, $decoder->getFatal() );
 		$this->assertSame( $expectedIgnoreBom, $decoder->getIgnoreBom() );
 	}
 
-	public static function provideTryNewOk() {
+	public static function provideTryNewOk(): array {
 		return [
 			[
 				'utf8',
@@ -50,12 +50,12 @@ class TextDecoderTest extends TestCase {
 	public function testTryNewError(
 		string $label,
 		TextDecoderOptions $options,
-	) {
+	): void {
 		$decoder = TextDecoder::tryNew( $label, $options );
 		$this->assertNull( $decoder );
 	}
 
-	public static function provideTryNewError() {
+	public static function provideTryNewError(): array {
 		return [
 			[
 				'foobar',

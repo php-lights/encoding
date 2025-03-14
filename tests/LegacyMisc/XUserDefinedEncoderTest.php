@@ -15,7 +15,7 @@ use PHPUnit\Framework\TestCase;
 #[UsesClass( HandleStateResult::class )]
 #[UsesClass( Queue::class )]
 class XUserDefinedEncoderTest extends TestCase {
-	public function testEndOfQueueFinished() {
+	public function testEndOfQueueFinished(): void {
 		$decoder = new XUserDefinedEncoder();
 		$queue = Queue::newFromArray( [ 0, 1, 2 ] );
 
@@ -23,7 +23,7 @@ class XUserDefinedEncoderTest extends TestCase {
 		$this->assertTrue( $result->state->isFinished() );
 	}
 
-	public function testAsciiOneOrMore() {
+	public function testAsciiOneOrMore(): void {
 		$decoder = new XUserDefinedEncoder();
 		$queue = Queue::newFromArray( [ 0, 1, 2 ] );
 
@@ -32,7 +32,7 @@ class XUserDefinedEncoderTest extends TestCase {
 		$this->assertSame( [ 4 ], $result->value );
 	}
 
-	public function testOtherOneOrMore() {
+	public function testOtherOneOrMore(): void {
 		$decoder = new XUserDefinedEncoder();
 		$queue = Queue::newFromArray( [ 0, 1, 2 ] );
 
@@ -41,7 +41,7 @@ class XUserDefinedEncoderTest extends TestCase {
 		$this->assertSame( [ 0x8F ], $result->value );
 	}
 
-	public function testError() {
+	public function testError(): void {
 		$decoder = new XUserDefinedEncoder();
 		$queue = Queue::newFromArray( [ 0, 1, 2 ] );
 

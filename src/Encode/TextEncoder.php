@@ -22,6 +22,7 @@ class TextEncoder implements TextEncoderCommon {
 	/**
 	 * @todo
 	 * @codeCoverageIgnore
+	 * @return int[]
 	 */
 	public function encode( string $input ): array {
 		throw new Exception();
@@ -30,6 +31,7 @@ class TextEncoder implements TextEncoderCommon {
 	/**
 	 * @todo
 	 * @codeCoverageIgnore
+	 * @param int[] $dest
 	 */
 	public function encodeInto( string $source, array $dest ): TextEncoderEncodeIntoResult {
 		throw new Exception();

@@ -17,6 +17,9 @@ class HandleStateResult {
 		return new self( HandleState::Finished, null );
 	}
 
+	/**
+	 * @param int[] $items
+	 */
 	public static function asOneOrMoreItems( array $items ): self {
 		return new self( HandleState::OneOrMore, $items );
 	}

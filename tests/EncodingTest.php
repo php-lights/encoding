@@ -12,7 +12,7 @@ class EncodingTest extends TestCase {
 		$this->assertSame( $expected, $encoding->isUtf8() );
 	}
 
-	public static function provideIsUtf8() {
+	public static function provideIsUtf8(): array {
 		return [
 			[ true, Encoding::Utf8 ],
 			[ false, Encoding::Replacement ],
@@ -24,7 +24,7 @@ class EncodingTest extends TestCase {
 		$this->assertSame( $expected, $encoding->isLegacySb() );
 	}
 
-	public static function provideIsLegacySb() {
+	public static function provideIsLegacySb(): array {
 		return [
 			[ true, Encoding::Ibm866 ],
 			[ true, Encoding::Iso8859_2 ],

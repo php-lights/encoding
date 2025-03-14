@@ -28,7 +28,7 @@ class UtilsTest extends TestCase {
 	}
 
 	#[DataProvider( 'provideIsLeadingSurrogate' )]
-	public function testIsLeadingSurrogate( bool $expected, int $codePoint ) {
+	public function testIsLeadingSurrogate( bool $expected, int $codePoint ): void {
 		$this->assertSame( $expected, Utils::isLeadingSurrogate( $codePoint ) );
 	}
 
@@ -43,7 +43,7 @@ class UtilsTest extends TestCase {
 	}
 
 	#[DataProvider( 'provideIsTrailingSurrogate' )]
-	public function testIsTrailingSurrogate( bool $expected, int $codePoint ) {
+	public function testIsTrailingSurrogate( bool $expected, int $codePoint ): void {
 		$this->assertSame( $expected, Utils::isTrailingSurrogate( $codePoint ) );
 	}
 

@@ -17,6 +17,9 @@ class Queue implements Countable {
 	private array $array;
 	private int $count;
 
+	/**
+	 * @param int[] $array
+	 */
 	public function __construct( array $array, int $size ) {
 		$this->array = $array;
 		$this->count = $size;
@@ -26,7 +29,10 @@ class Queue implements Countable {
 		return new self( [], 0 );
 	}
 
-	public static function newFromArray( array $array ) {
+	/**
+	 * @param int[] $array
+	 */
+	public static function newFromArray( array $array ): self {
 		return new self( $array, count( $array ) );
 	}
 
