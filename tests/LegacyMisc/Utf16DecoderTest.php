@@ -22,6 +22,11 @@ class Utf16DecoderTest extends TestCase {
 		$this->assertInstanceOf( TextCodec::class, Utf16Decoder::forLittleEndian() );
 	}
 
+	public function testSanityChecks(): void {
+		$this->assertTrue( Utf16Decoder::forBigEndian()->isBigEndian );
+		$this->assertFalse( Utf16Decoder::forLittleEndian()->isBigEndian );
+	}
+
 	/**
 	 * Decoder reached the first continue state and then
 	 * reached the first error state, as follows:
@@ -57,13 +62,18 @@ class Utf16DecoderTest extends TestCase {
 
 	public static function provideFirstErrorState(): array {
 		return [
-			// #0: big endian
 			[
 				true,
 				[ 0, 1, 2 ],
 				3,
 				2,
-			]
+			],
+			[
+				false,
+				[ 0, 1, 2 ],
+				3,
+				2,
+			],
 		];
 	}
 
@@ -93,9 +103,13 @@ class Utf16DecoderTest extends TestCase {
 
 	public static function provideFirstFinishedState(): array {
 		return [
-			// #0: big endian
 			[
 				true,
+				[ 0, 1, 2 ],
+				2,
+			],
+			[
+				false,
 				[ 0, 1, 2 ],
 				2,
 			]
@@ -132,26 +146,35 @@ class Utf16DecoderTest extends TestCase {
 				true,
 				[ 0, 1, 2 ],
 				3,
+			],
+			[
+				false,
+				[ 0, 1, 2 ],
+				3,
 			]
 		];
 	}
 
-	/**
-	 * @todo CONVERT TO USE DATA PROVIDER
-	 */
-	public function testSecondContinueState(): void {
-		$decoder = Utf16Decoder::forBigEndian();
-		$queue = Queue::newFromArray( [ 0, 1, 2 ] );
+	#[DataProvider( 'provideSecondContinueState' )]
+	public function testSecondContinueState(
+		bool $isDecoderBigEndian,
+		array $queueItems,
+		int $byte1,
+		int $byte2,
+		int $byte3,
+	): void {
+		$decoder = new Utf16Decoder( $isDecoderBigEndian );
+		$queue = Queue::newFromArray( $queueItems );
 		$states = [];
 
 		// Send high surrogate first
-		$result1 = $decoder->handler( $queue, 0xD8 );
+		$result1 = $decoder->handler( $queue, $byte1 );
 		\array_push( $states, $result1->state );
-		$result2 = $decoder->handler( $queue, 0x00 );
+		$result2 = $decoder->handler( $queue, $byte2 );
 		\array_push( $states, $result2->state );
 
 		// Start sending another surrogate
-		$result3 = $decoder->handler( $queue, 0xDC );
+		$result3 = $decoder->handler( $queue, $byte3 );
 		\array_push( $states, $result3->state );
 
 		$this->assertSame(
@@ -164,24 +187,40 @@ class Utf16DecoderTest extends TestCase {
 		);
 	}
 
-	/**
-	 * @todo CONVERT TO USE DATA PROVIDER
-	 */
-	public function testFirstOneOrMoreState(): void {
-		$decoder = Utf16Decoder::forBigEndian();
-		$queue = Queue::newFromArray( [] );
+	public static function provideSecondContinueState(): array {
+		return [
+			[
+				true,
+				[ 0, 1, 2 ],
+				0xD8, 0x00,
+				0xDC
+			],
+		];
+	}
+
+	#[DataProvider( 'provideFirstOneOrMoreState' )]
+	public function testFirstOneOrMoreState(
+		bool $isDecoderBigEndian,
+		array $queueItems,
+		int $byte1,
+		int $byte2,
+		int $byte3,
+		int $byte4,
+	): void {
+		$decoder = new Utf16Decoder( $isDecoderBigEndian );
+		$queue = Queue::newFromArray( $queueItems );
 		$states = [];
 
 		// send high/trailing surrogate
-		$result1 = $decoder->handler( $queue, 0xd8 );
+		$result1 = $decoder->handler( $queue, $byte1 );
 		\array_push( $states, $result1->state );
-		$result2 = $decoder->handler( $queue, 0x00 );
+		$result2 = $decoder->handler( $queue, $byte2 );
 		\array_push( $states, $result2->state );
 
 		// send low/leading surrogate
-		$result3 = $decoder->handler( $queue, 0xdc );
+		$result3 = $decoder->handler( $queue, $byte3 );
 		\array_push( $states, $result3->state );
-		$result4 = $decoder->handler( $queue, 0x00 );
+		$result4 = $decoder->handler( $queue, $byte4 );
 		\array_push( $states, $result4->state );
 
 		$this->assertSame(
@@ -195,24 +234,46 @@ class Utf16DecoderTest extends TestCase {
 		);
 	}
 
-	/**
-	 * @todo CONVERT TO USE DATA PROVIDER
-	 */
-	public function testSecondErrorState(): void {
-		$decoder = Utf16Decoder::forBigEndian();
-		$queue = Queue::newFromArray( [ 0, 1, 2 ] );
+	public static function provideFirstOneOrMoreState(): array {
+		return [
+			[
+				true,
+				[],
+				0xD8, 0x00,
+				0xDC, 0x00,
+			],
+			[
+				false,
+				[],
+				0x00, 0xD8,
+				0x00, 0xDC,
+			]
+		];
+	}
+
+	#[DataProvider( 'provideSecondErrorState' )]
+	public function testSecondErrorState(
+		bool $isDecoderBigEndian,
+		array $queueItems,
+		int $byte1,
+		int $byte2,
+		int $byte3,
+		int $byte4,
+	): void {
+		$decoder = new Utf16Decoder( $isDecoderBigEndian );
+		$queue = Queue::newFromArray( $queueItems );
 		$states = [];
 
 		// Send high/trailing surrogate first
-		$result1 = $decoder->handler( $queue, 0xD8 );
+		$result1 = $decoder->handler( $queue, $byte1 );
 		\array_push( $states, $result1->state );
-		$result2 = $decoder->handler( $queue, 0x00 );
+		$result2 = $decoder->handler( $queue, $byte2 );
 		\array_push( $states, $result2->state );
 
 		// Send non-trailing surrogate (error case)
-		$result3 = $decoder->handler( $queue, 0x00 );
+		$result3 = $decoder->handler( $queue, $byte3 );
 		\array_push( $states, $result3->state );
-		$result4 = $decoder->handler( $queue, 0x41 );
+		$result4 = $decoder->handler( $queue, $byte4 );
 		\array_push( $states, $result4->state );
 
 		$this->assertSame(
@@ -226,6 +287,23 @@ class Utf16DecoderTest extends TestCase {
 		);
 	}
 
+	public static function provideSecondErrorState(): array {
+		return [
+			[
+				true,
+				[],
+				0xD8, 0x00,
+				0x00, 0x41
+			],
+			[
+				false,
+				[],
+				0x00, 0xD8,
+				0x41, 0x00,
+			]
+		];
+	}
+
 	#[DataProvider( 'provideThirdErrorState' )]
 	public function testThirdErrorState(
 		bool $isDecoderBigEndian,
@@ -237,7 +315,6 @@ class Utf16DecoderTest extends TestCase {
 		$queue = Queue::newFromArray( $queueItems );
 		$states = [];
 
-		// Send trailing surrogate without a leading surrogate first
 		$result1 = $decoder->handler( $queue, $byte1 );
 		\array_push( $states, $result1->state );
 		$result2 = $decoder->handler( $queue, $byte2 );
@@ -255,6 +332,7 @@ class Utf16DecoderTest extends TestCase {
 	public static function provideThirdErrorState(): array {
 		return [
 			[ true, [ 0, 1, 2 ], 0xDC, 0x00 ],
+			[ false, [ 0, 1, 2 ], 0x00, 0xDC ],
 		];
 	}
 
@@ -286,6 +364,7 @@ class Utf16DecoderTest extends TestCase {
 	public static function provideSecondOneOrMoreState(): array {
 		return [
 			[ true, [], 0x00, 0x41 ],
+			[ false, [], 0x41, 0x00 ],
 		];
 	}
 }
