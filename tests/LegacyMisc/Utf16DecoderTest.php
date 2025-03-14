@@ -136,7 +136,9 @@ class Utf16DecoderTest extends TestCase {
 		];
 	}
 
-	// @TODO: CONVERT TO USE DATA PROVIDER
+	/**
+	 * @todo CONVERT TO USE DATA PROVIDER
+	 */
 	public function testSecondContinueState(): void {
 		$decoder = Utf16Decoder::forBigEndian();
 		$queue = Queue::newFromArray( [ 0, 1, 2 ] );
@@ -162,7 +164,9 @@ class Utf16DecoderTest extends TestCase {
 		);
 	}
 
-	// @TODO: CONVERT TO USE DATA PROVIDER
+	/**
+	 * @todo CONVERT TO USE DATA PROVIDER
+	 */
 	public function testFirstOneOrMoreState(): void {
 		$decoder = Utf16Decoder::forBigEndian();
 		$queue = Queue::newFromArray( [] );
@@ -191,7 +195,9 @@ class Utf16DecoderTest extends TestCase {
 		);
 	}
 
-	// @TODO: CONVERT TO USE DATA PROVIDER
+	/**
+	 * @todo CONVERT TO USE DATA PROVIDER
+	 */
 	public function testSecondErrorState(): void {
 		$decoder = Utf16Decoder::forBigEndian();
 		$queue = Queue::newFromArray( [ 0, 1, 2 ] );
