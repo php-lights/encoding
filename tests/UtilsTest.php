@@ -27,15 +27,33 @@ class UtilsTest extends TestCase {
 		];
 	}
 
-	#[DataProvider( 'provideIsWithin' )]
-	public function testIsWithin( bool $expected, int $n, int $min, int $max ): void {
-		$this->assertSame( $expected, Utils::isWithin( $n, $min, $max ) );
+	#[DataProvider( 'provideIsLeadingSurrogate' )]
+	public function testIsLeadingSurrogate( bool $expected, int $codePoint ) {
+		$this->assertSame( $expected, Utils::isLeadingSurrogate( $codePoint ) );
 	}
 
-	public static function provideIsWithin(): array {
+	public static function provideIsLeadingSurrogate(): array {
 		return [
-			[ true, 0, -1, 1 ],
-			[ false, 0, 2, 4 ],
+			[ true, 0xD800 ],
+			[ true, 0xDBFF ],
+			[ true, 0xD8FF ],
+			[ false, 0xD7FF ], // below bounds
+			[ false, 0xDC00 ], // above bounds
+		];
+	}
+
+	#[DataProvider( 'provideIsTrailingSurrogate' )]
+	public function testIsTrailingSurrogate( bool $expected, int $codePoint ) {
+		$this->assertSame( $expected, Utils::isTrailingSurrogate( $codePoint ) );
+	}
+
+	public static function provideIsTrailingSurrogate(): array {
+		return [
+			[ true, 0xDC00 ],
+			[ true, 0xDFFF ],
+			[ true, 0xDCFF ],
+			[ false, 0xDBFF ], // below bounds
+			[ false, 0xE000 ], // above bounds
 		];
 	}
 
@@ -52,6 +70,18 @@ class UtilsTest extends TestCase {
 			[ true, \ord( '9' ) ],
 			[ true, 0x007F ],
 			[ false, 0x0080 ],
+		];
+	}
+
+	#[DataProvider( 'provideIsWithin' )]
+	public function testIsWithin( bool $expected, int $n, int $min, int $max ): void {
+		$this->assertSame( $expected, Utils::isWithin( $n, $min, $max ) );
+	}
+
+	public static function provideIsWithin(): array {
+		return [
+			[ true, 0, -1, 1 ],
+			[ false, 0, 2, 4 ],
 		];
 	}
 }

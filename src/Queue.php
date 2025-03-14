@@ -3,7 +3,6 @@
 namespace Neoncitylights\Encoding;
 
 use Countable;
-use Exception;
 
 /**
  * A queue data structure that runs in intermediate mode
@@ -71,20 +70,19 @@ class Queue implements Countable {
 	}
 
 	/**
-	 * @todo
-	 * @codeCoverageIgnore
 	 * @see https://encoding.spec.whatwg.org/#concept-stream-prepend
 	 */
 	public function restoreItem( int $item ): void {
-		throw new Exception();
+		\array_unshift( $this->array, $item );
+		$this->count += 1;
 	}
 
 	/**
-	 * @todo
-	 * @codeCoverageIgnore
+	 * @param int[] $items
 	 * @see https://encoding.spec.whatwg.org/#concept-stream-prepend
 	 */
 	public function restoreListOfItems( array $items ): void {
-		throw new Exception();
+		\array_unshift( $this->array, ...$items );
+		$this->count += count( $items );
 	}
 }
