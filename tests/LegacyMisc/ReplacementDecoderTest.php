@@ -1,11 +1,11 @@
 <?php
 
-namespace Neoncitylights\Encoding\Replacement\Tests;
+namespace Neoncitylights\Encoding\LegacyMisc\Tests;
 
 use Neoncitylights\Encoding\HandleState;
 use Neoncitylights\Encoding\HandleStateResult;
+use Neoncitylights\Encoding\LegacyMisc\ReplacementDecoder;
 use Neoncitylights\Encoding\Queue;
-use Neoncitylights\Encoding\Replacement\ReplacementDecoder;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\UsesClass;
 use PHPUnit\Framework\TestCase;

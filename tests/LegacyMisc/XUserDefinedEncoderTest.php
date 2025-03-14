@@ -1,23 +1,22 @@
 <?php
 
-namespace Neoncitylights\Encoding\XUserDefined\Tests;
+namespace Neoncitylights\Encoding\LegacyMisc\Tests;
 
 use Neoncitylights\Encoding\HandleState;
 use Neoncitylights\Encoding\HandleStateResult;
+use Neoncitylights\Encoding\LegacyMisc\XUserDefinedEncoder;
 use Neoncitylights\Encoding\Queue;
-use Neoncitylights\Encoding\XUserDefined\XUserDefinedDecoder;
 use PHPUnit\Framework\Attributes\CoversClass;
-use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\UsesClass;
 use PHPUnit\Framework\TestCase;
 
-#[CoversClass( XUserDefinedDecoder::class )]
+#[CoversClass( XUserDefinedEncoder::class )]
 #[UsesClass( HandleState::class )]
 #[UsesClass( HandleStateResult::class )]
 #[UsesClass( Queue::class )]
-class XUserDefinedDecoderTest extends TestCase {
+class XUserDefinedEncoderTest extends TestCase {
 	public function testEndOfQueueFinished() {
-		$decoder = new XUserDefinedDecoder();
+		$decoder = new XUserDefinedEncoder();
 		$queue = Queue::newFromArray( [ 0, 1, 2 ] );
 
 		$result = $decoder->handler( $queue, 2 );
@@ -25,7 +24,7 @@ class XUserDefinedDecoderTest extends TestCase {
 	}
 
 	public function testAsciiOneOrMore() {
-		$decoder = new XUserDefinedDecoder();
+		$decoder = new XUserDefinedEncoder();
 		$queue = Queue::newFromArray( [ 0, 1, 2 ] );
 
 		$result = $decoder->handler( $queue, 4 );
@@ -33,20 +32,21 @@ class XUserDefinedDecoderTest extends TestCase {
 		$this->assertSame( [ 4 ], $result->value );
 	}
 
-	#[DataProvider( 'provideNotAsciiOneOrMore' )]
-	public function testNotAsciiOneOrMore( int $originalByte, int $expectedByte ) {
-		$decoder = new XUserDefinedDecoder();
+	public function testOtherOneOrMore() {
+		$decoder = new XUserDefinedEncoder();
 		$queue = Queue::newFromArray( [ 0, 1, 2 ] );
 
-		$result = $decoder->handler( $queue, $originalByte );
+		$result = $decoder->handler( $queue, 0xF78F );
 		$this->assertTrue( $result->state->isOneOrMore() );
-		$this->assertSame( [ $expectedByte ], $result->value );
+		$this->assertSame( [ 0x8F ], $result->value );
 	}
 
-	public static function provideNotAsciiOneOrMore(): array {
-		return [
-			[ 0x80, 0xF780 ],
-			[ 0xFF, 0xF7FF ],
-		];
+	public function testError() {
+		$decoder = new XUserDefinedEncoder();
+		$queue = Queue::newFromArray( [ 0, 1, 2 ] );
+
+		$result = $decoder->handler( $queue, 0xF800 );
+		$this->assertTrue( $result->state->isError() );
+		$this->assertSame( 0xF800, $result->value );
 	}
 }
